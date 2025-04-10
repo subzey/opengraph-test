@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+.test {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	isolation: isolate;
+	height: 1000px;
+	margin: 100px;
+	border-radius: 30px;
+	background: white;
+	border: solid red 4px;
+	animation: bsh 1000ms ease-in-out alternate infinite;
+	font-size: 5vh;
+}
+
+@keyframes bsh {
+	from { box-shadow: 30px 30px 500px red, -30px -30px 500px blue; }
+	to { box-shadow: 30px 30px 500px blue, -30px -30px 500px red; }
+}
+
+	</style>
+</head>
+<body>
+	<div class="test"></div>
+	<script>
+		const tn = document.querySelector('.test').appendChild(document.createTextNode(''));
+		let prev = -Infinity;
+		let count = 0;
+		requestAnimationFrame(function frame(now) {
+			requestAnimationFrame(frame);
+			if (count === 0) {
+				tn.nodeValue = (1000 / ((now - prev) / 60)).toFixed(1) + ' FPS';
+				prev = now;
+				count = 60;
+			}
+			count--;
+		});
+	</script>
+</body>
+</html>
